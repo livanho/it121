@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div id=gradesList>
+  <ul>
+  </ul>
+</div>
+
+<script>
+
+  let grades = "jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+
+  // Function to capitalize the first letter of a name
+  function capitalizeName(name) {
+      return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+  }
+
+  // Split the string into an array of "name|grade" parts
+  let gradesArray = grades.split(", ");
+
+  // Parse into an array of objects with name and grade properties
+  let gradesObjects = gradesArray.map(item => {
+      let parts = item.split("|");
+      return { name: capitalizeName(parts[0]), grade: parseInt(parts[1], 10) };
+  });
+
+  // Generate the HTML list items string
+  let listItemsString = gradesObjects.map(item => `<li>${item.name} - ${item.grade}</li>`).join("\n");
+
+  // The final HTML string for the list
+  let htmlList = `<ul>\n${listItemsString}\n</ul>`;
+
+  // insert the list into the gradesList element
+  document.getElementById("gradesList").innerHTML = htmlList;
+
+
+
+</script>
+</body>
+
+</html>
