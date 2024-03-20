@@ -9,5 +9,35 @@
 <body>
   
 </body>
-  <script src = "./script.js"></script>
+  <script>
+    // Livan Hagi Osman 03/20/2024
+
+    let userWord = prompt("Enter a word: ");
+    let vowels = ['a', 'e', 'i', 'o', 'u'];
+    let firstConsonants = [];
+    let array = userWord.toLowerCase().split("");
+    let wordConverted = "";
+
+    if (userWord === "" || userWord.length === 1) {
+      console.log("Input can't be translated.");
+    } else {
+      let vowels = ['a', 'e', 'i', 'o', 'u'];
+      let array = userWord.toLowerCase().split("");
+      let wordConverted = "";
+      let firstConsonants = [];
+
+      // Check if the first letter is a vowel
+      if (vowels.includes(array[0])) {
+        wordConverted = userWord + "way";
+      } else {
+        // Move through the word until a vowel is found or two consonants are moved
+        for (let i = 0; i < array.length && !vowels.includes(array[i]) && firstConsonants.length < 2; i++) {
+          firstConsonants.push(array.shift());
+        }
+        wordConverted = array.join("") + firstConsonants.join("") + "ay";
+      }
+
+      console.log(wordConverted);
+    }
+  </script>
 </html>
