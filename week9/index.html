@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draw Me A Picture</title>
+</head>
+<body>
+<canvas id="myCanvas" width="500" height="500"></canvas>
+</body>
+  <script>
+    const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
+let sunY = 100; // Initial Y position of the sun
+let isSunRising = true; // Sun movement direction
+
+function drawSun() {
+    ctx.beginPath();
+    ctx.arc(400, sunY, 50, 0, Math.PI * 2);
+    ctx.fillStyle = 'yellow';
+    ctx.fill();
+    ctx.closePath();
+}
+
+function drawGround() {
+    ctx.beginPath();
+    ctx.rect(0, 450, 800, 150);
+    ctx.fillStyle = 'green';
+    ctx.fill();
+    ctx.closePath();
+}
+
+function drawTree() {
+    ctx.save();
+
+    // Tree trunk
+    ctx.beginPath();
+    ctx.rect(375, 400, 50, 100);
+    ctx.fillStyle = 'saddlebrown';
+    ctx.fill();
+    ctx.closePath();
+
+    // Tree leaves
+    ctx.beginPath();
+    ctx.arc(400, 350, 75, 0, Math.PI * 2);
+    ctx.fillStyle = 'darkgreen';
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.restore();
+}
+
+function updateSunPosition() {
+    if (isSunRising) {
+        sunY -= 1;
+        if (sunY < 100) {
+            isSunRising = false;
+        }
+    } else {
+        sunY += 1;
+        if (sunY > 500) {
+            isSunRising = true;
+        }
+    }
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Update sky color based on sun position
+    const skyColor = sunY > 250 ? '#001848' : '#72c1f2';
+    canvas.style.background = skyColor;
+
+    drawSun();
+    drawGround();
+    drawTree();
+
+    updateSunPosition();
+
+    requestAnimationFrame(draw);
+}
+
+draw();
+
+  </script>
+</html>
