@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+</head>
+<body>
+
+<h1>Robo Dealer</h1>
+
+<button onclick="dealHand();">Deal Hand</button>
+
+<hr><div id="card_hand"></div>
+
+<script>
+  // create card objects with value and suit
+  class Card {
+    constructor(value, suit) {
+      this.value = value;
+      this.suit = suit;
+    }
+  }
+
+  // Generate a deck of cards
+  const suits = ['Spades', 'Hearts', 'Diamonds', 'Clubs'];
+  const values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King', 'Ace'];
+  let deck = suits.flatMap(suit => values.map(value => new Card(value, suit))); // create a 52-card deck combining each suit with each value.
+
+  // This function shuffles the deck before each hand to ensure randomness.
+  const shuffleDeck = (deck) => {
+    for (let i = deck.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [deck[i], deck[j]] = [deck[j], deck[i]]; // ES6 array destructuring to swap elements
+    }
+  };
+
+  // Function to draw 5 unique cards
+  const drawCards = () => {
+    shuffleDeck(deck); // Ensure the deck is shuffled before drawing
+    return deck.slice(0, 5); // Take the first 5 cards from the shuffled deck
+  };
+
+  // Update 'card_hand' DIV with the drawn hand
+  const dealHand = () => {
+    const hand = drawCards();
+    const handHTML = hand.map(card => `${card.value} of ${card.suit}`).join('<br>');
+    $("#card_hand").html(handHTML);
+
+    return false; // Prevent page reload
+  };
+</script>
+
+</body>
+</html>
